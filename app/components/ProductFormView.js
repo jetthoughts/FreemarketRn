@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { KeyboardAvoidingView, View, Button, StyleSheet } from 'react-native';
+import { ScrollView, View, Button, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
 
 import FormImagePicker from './FormImagePicker';
@@ -35,6 +35,7 @@ const Product = t.struct({
   name: Name,
   description: t.maybe(t.String),
   price: Positive,
+  endTime: t.Date,
 });
 
 const formOptions = {
@@ -81,7 +82,7 @@ export default class ProductFormView extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.formView} behavior={'position'}>
+      <ScrollView style={styles.formView}>
         <FormImagePicker
           imageSource={this.state.imageSource}
           setLocalImage={localImage => this.setLocalImage(localImage)}
@@ -105,7 +106,7 @@ export default class ProductFormView extends Component {
             title="Back"
           />
         </View>
-      </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }
