@@ -4,6 +4,7 @@ import { ScrollView, View, Button, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
 
 import FormImagePicker from './FormImagePicker';
+import { dateToTimeString } from '../lib/helpers'
 
 const styles = StyleSheet.create({
   formView: {
@@ -54,6 +55,12 @@ const formOptions = {
     price: {
       help: 'Pro tip: better to set affordable price',
       error: 'Please, give a positive number'
+    },
+    endTime: {
+      mode: 'time',
+      config: {
+        format: dateToTimeString,
+      },
     },
   },
 };
