@@ -36,6 +36,8 @@ const Product = t.struct({
   name: Name,
   description: t.maybe(t.String),
   price: Positive,
+  allowPhone: t.Bool,
+  phone: t.String,
   endTime: t.Date,
 });
 
@@ -56,6 +58,9 @@ const formOptions = {
       help: 'Pro tip: better to set affordable price',
       error: 'Please, give a positive number'
     },
+    phone: {
+      editable: false,
+    },
     endTime: {
       mode: 'time',
       config: {
@@ -71,6 +76,8 @@ export default class ProductFormView extends Component {
     this.state = {
       imageSrouce: null,
       localImage: null,
+      formOptions: formOptions,
+      formValue: null,
     };
   }
 
@@ -78,6 +85,17 @@ export default class ProductFormView extends Component {
     const product = this.form.getValue();
     const { localImage } = this.state;
     this.props.onPress({ product, localImage });
+  }
+
+  onFormChange(value) {
+    const options = t.update(this.state.formOptions, {
+      fields: {
+        phone: {
+          editable: {'$set': value.allowPhone},
+        }
+      }
+    });
+    this.setState({formOptions: options, formValue: value});
   }
 
   setLocalImage(localImage) {
@@ -97,7 +115,9 @@ export default class ProductFormView extends Component {
         <Form
           ref={_form => (this.form = _form)}
           type={Product}
-          options={formOptions}
+          options={this.state.formOptions}
+          value={this.state.formValue}
+          onChange={(value) => this.onFormChange(value)}
         />
         <View style={styles.button}>
           <Button
