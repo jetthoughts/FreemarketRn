@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Button, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, View, Button, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
 
 import FormImagePicker from './FormImagePicker';
@@ -17,10 +17,45 @@ const styles = StyleSheet.create({
 
 const Form = t.form.Form;
 
-const Product = t.struct({
-  name: t.String,
-  price: t.Number,
+const Name = t.String;
+
+Name.getValidationErrorMessage = (value, path, context) => {
+  if (!value) {
+    return "Please, add some name";
+  } else {
+    return '';
+  }
+}
+
+const Positive = t.refinement(t.Number, function (n) {
+  return n >= 0 && n <= 100;
 });
+
+const Product = t.struct({
+  name: Name,
+  description: t.maybe(t.String),
+  price: Positive,
+});
+
+const formOptions = {
+  i18n: {
+    optional: '',
+    required: ' *',
+  },
+  fields: {
+    name: {
+      maxLength: 4,
+    },
+    description: {
+      multiline: true,
+      numberOfLines: 4,
+    },
+    price: {
+      help: 'Pro tip: better to set affordable price',
+      error: 'Please, give a positive number'
+    },
+  },
+};
 
 export default class ProductFormView extends Component {
   constructor(props) {
@@ -46,7 +81,7 @@ export default class ProductFormView extends Component {
 
   render() {
     return (
-      <View style={styles.formView}>
+      <KeyboardAvoidingView style={styles.formView} behavior={'position'}>
         <FormImagePicker
           imageSource={this.state.imageSource}
           setLocalImage={localImage => this.setLocalImage(localImage)}
@@ -54,6 +89,7 @@ export default class ProductFormView extends Component {
         <Form
           ref={_form => (this.form = _form)}
           type={Product}
+          options={formOptions}
         />
         <View style={styles.button}>
           <Button
@@ -69,7 +105,7 @@ export default class ProductFormView extends Component {
             title="Back"
           />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
