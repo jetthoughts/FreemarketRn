@@ -4,15 +4,11 @@ import { Keyboard } from 'react-native';
 
 import ProductFormView from '../components/ProductFormView';
 import { requestCreateProduct } from '../reducers/products';
+import categories from '../constants/categories';
+import { categoriesToObject } from '../lib/helpers';
 
 const mapStateToProps = state => ({
-  categories: {
-  '0': 'Antiques',
-  '1': 'Books, Comics & Magazines',
-  '2': 'Cars, Motorcycles & Vehicles',
-  '3': 'Events Tickets',
-  '4': 'Pet Supplies',
-},
+  categories: categoriesToObject(categories),
 });
 
 const mapDispatchToProps = dispatch => ({
