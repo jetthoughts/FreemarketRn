@@ -32,23 +32,15 @@ const Positive = t.refinement(t.Number, function (n) {
   return n >= 0 && n <= 100;
 });
 
-const Category = t.enums({
-  '0': 'Antiques',
-  '1': 'Books, Comics & Magazines',
-  '2': 'Cars, Motorcycles & Vehicles',
-  '3': 'Events Tickets',
-  '4': 'Pet Supplies',
-});
-
-const Product = t.struct({
+const productOptions = {
   name: Name,
   description: t.maybe(t.String),
-  category: Category,
+  category: t.enums({'-1': 'Loading...'}),
   price: Positive,
   allowPhone: t.Bool,
   phone: t.String,
   endTime: t.Date,
-});
+};
 
 const formOptions = {
   i18n: {
@@ -88,11 +80,17 @@ const formOptions = {
 export default class ProductFormView extends Component {
   constructor(props) {
     super(props);
+
+    const newProductOptions = t.update(productOptions, {
+      category: { '$set': t.enums(props.categories) }
+    });
+    
     this.state = {
       imageSrouce: null,
       localImage: null,
       formOptions: formOptions,
       formValue: null,
+      Product: t.struct(newProductOptions),
     };
   }
 
@@ -129,7 +127,7 @@ export default class ProductFormView extends Component {
         />
         <Form
           ref={_form => (this.form = _form)}
-          type={Product}
+          type={this.state.Product}
           options={this.state.formOptions}
           value={this.state.formValue}
           onChange={(value) => this.onFormChange(value)}
