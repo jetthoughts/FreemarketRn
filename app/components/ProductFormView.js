@@ -32,9 +32,18 @@ const Positive = t.refinement(t.Number, function (n) {
   return n >= 0 && n <= 100;
 });
 
+const Category = t.enums({
+  '0': 'Antiques',
+  '1': 'Books, Comics & Magazines',
+  '2': 'Cars, Motorcycles & Vehicles',
+  '3': 'Events Tickets',
+  '4': 'Pet Supplies',
+});
+
 const Product = t.struct({
   name: Name,
   description: t.maybe(t.String),
+  category: Category,
   price: Positive,
   allowPhone: t.Bool,
   phone: t.String,
@@ -53,6 +62,12 @@ const formOptions = {
     description: {
       multiline: true,
       numberOfLines: 4,
+    },
+    category: {
+      nullOption: {
+        value: '', 
+        text: '< Choose Category >',
+      },
     },
     price: {
       help: 'Pro tip: better to set affordable price',
