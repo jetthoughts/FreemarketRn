@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
 
 const Form = t.form.Form;
 
+const ImageFlag = t.refinement(t.Bool, value => value);
+
 const Name = t.String;
 
 Name.getValidationErrorMessage = (value, path, context) => {
@@ -33,6 +35,7 @@ const Positive = t.refinement(t.Number, function (n) {
 });
 
 const productOptions = {
+  imageFlag: ImageFlag,
   name: Name,
   description: t.maybe(t.String),
   category: t.enums({'-1': 'Loading...'}),
@@ -48,8 +51,12 @@ const formOptions = {
     required: ' *',
   },
   fields: {
+    imageFlag: {
+      // hidden: true,
+      error: 'Please, add an image'
+    },
     name: {
-      maxLength: 4,
+      maxLength: 10,
     },
     description: {
       multiline: true,
@@ -91,7 +98,9 @@ export default class ProductFormView extends Component {
       imageSrouce: null,
       localImage: null,
       formOptions: formOptions,
-      formValue: null,
+      formValue: {
+        name: 'Misha',
+      },
       productOptions: newProductOptions,
     };
   }
@@ -109,6 +118,7 @@ export default class ProductFormView extends Component {
 
   onFormPress() {
     const product = this.form.getValue();
+    // a = this.form.getComponent('imageFlag').refs;
     const { localImage } = this.state;
     this.props.onPress({ product, localImage });
   }
@@ -128,6 +138,7 @@ export default class ProductFormView extends Component {
     this.setState({
       imageSource: localImage.uri,
       localImage,
+      formValue: { ...this.state.formValue, imageFlag: true },
     });
   }
 
