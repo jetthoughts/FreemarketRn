@@ -5,6 +5,7 @@ import t from 'tcomb-form-native';
 
 import FormImagePicker from './FormImagePicker';
 import { dateToTimeString } from '../lib/helpers'
+import MaskedInputTemplate from '../lib/templates/MaskedInputTemplate'
 
 const styles = StyleSheet.create({
   formView: {
@@ -70,10 +71,18 @@ const formOptions = {
     },
     price: {
       help: 'Pro tip: better to set affordable price',
-      error: 'Please, give a positive number'
+      error: 'Please, give a positive number',
+      template: MaskedInputTemplate,
+      config: {
+        mask: 'money',
+      }
     },
     phone: {
       editable: false,
+      template: MaskedInputTemplate,
+      config: {
+        mask: 'cel-phone',
+      }
     },
     endTime: {
       mode: 'time',
