@@ -98,12 +98,12 @@ export default class ProductFormView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.categories != this.props.categories) {
-      const newProductOptions = t.update(productOptions, {
-      category: { '$set': t.enums(nextProps.categories) }
-    });
-    this.setState({
-      productOptions: newProductOptions,
-    });
+      const newProductOptions = t.update(this.state.productOptions, {
+        category: { '$set': t.enums(nextProps.categories) }
+      });
+      this.setState({
+        productOptions: newProductOptions,
+      });
     }
   }
 
@@ -130,10 +130,6 @@ export default class ProductFormView extends Component {
       localImage,
     });
   }
-
-  // buildProduct() {
-  //   return t.struct(this.state.productOptions);
-  // }
 
   render() {
     return (
