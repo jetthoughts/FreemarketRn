@@ -81,6 +81,8 @@ export default class ProductFormView extends Component {
   constructor(props) {
     super(props);
 
+    props.loadCategories();
+
     const newProductOptions = t.update(productOptions, {
       category: { '$set': t.enums(props.categories) }
     });
@@ -90,8 +92,19 @@ export default class ProductFormView extends Component {
       localImage: null,
       formOptions: formOptions,
       formValue: null,
-      Product: t.struct(newProductOptions),
+      productOptions: newProductOptions,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.categories != this.props.categories) {
+      const newProductOptions = t.update(productOptions, {
+      category: { '$set': t.enums(nextProps.categories) }
+    });
+    this.setState({
+      productOptions: newProductOptions,
+    });
+    }
   }
 
   onFormPress() {
@@ -118,6 +131,10 @@ export default class ProductFormView extends Component {
     });
   }
 
+  // buildProduct() {
+  //   return t.struct(this.state.productOptions);
+  // }
+
   render() {
     return (
       <ScrollView style={styles.formView}>
@@ -127,7 +144,7 @@ export default class ProductFormView extends Component {
         />
         <Form
           ref={_form => (this.form = _form)}
-          type={this.state.Product}
+          type={t.struct(this.state.productOptions)}
           options={this.state.formOptions}
           value={this.state.formValue}
           onChange={(value) => this.onFormChange(value)}

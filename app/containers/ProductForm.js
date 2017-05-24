@@ -6,12 +6,14 @@ import ProductFormView from '../components/ProductFormView';
 import { requestCreateProduct } from '../reducers/products';
 import categories from '../constants/categories';
 import { categoriesToObject } from '../lib/helpers';
+import { requestCategories } from '../reducers/categories';
 
 const mapStateToProps = state => ({
-  categories: categoriesToObject(categories),
+  categories: categoriesToObject(state.categories.list.records),
 });
 
 const mapDispatchToProps = dispatch => ({
+  loadCategories: () => dispatch(requestCategories()),
   onPress: (payload) => {
     Keyboard.dismiss();
     if (payload.product) {
