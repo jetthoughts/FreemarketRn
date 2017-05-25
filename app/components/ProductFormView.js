@@ -5,7 +5,8 @@ import t from 'tcomb-form-native';
 
 import FormImagePicker from './FormImagePicker';
 import { dateToTimeString } from '../lib/helpers'
-import MaskedInputTemplate from '../lib/templates/MaskedInputTemplate'
+import MaskedInputTemplate from '../lib/form_templates/MaskedInputTemplate';
+import LocalImageFactory from '../lib/form_factories/LocalImageFactory.js';
 
 const styles = StyleSheet.create({
   formView: {
@@ -35,15 +36,44 @@ const Positive = t.refinement(t.Number, function (n) {
   return n >= 0 && n <= 100;
 });
 
+// const LocalImage = t.refinement(t.Struct({
+//   // data: t.String,
+//   // fileName: t.String,
+//   // fileSize: t.Integer,
+//   // height: t.Integer,
+//   // isVertical: t.Bool,
+//   // originalRotation: t.Integer,
+//   // path: t.String,
+//   // type: t.String,
+//   uri: t.String,
+//   // width: t.Integer,
+// }), (localImageStruct) => {
+//   return localImageStruct;
+// });
+
+const LocalImage = t.struct({
+  data: t.String,
+  fileName: t.String,
+  fileSize: t.Integer,
+  height: t.Integer,
+  isVertical: t.Bool,
+  originalRotation: t.Integer,
+  path: t.String,
+  type: t.String,
+  uri: t.String,
+  width: t.Integer,
+});
+
 const productOptions = {
-  imageFlag: ImageFlag,
+  image: LocalImage,
+  // imageFlag: ImageFlag,
   name: Name,
-  description: t.maybe(t.String),
-  category: t.enums({'-1': 'Loading...'}),
+  // description: t.maybe(t.String),
+  // category: t.enums({'-1': 'Loading...'}),
   price: Positive,
-  allowPhone: t.Bool,
-  phone: t.String,
-  endTime: t.Date,
+  // allowPhone: t.Bool,
+  // phone: t.String,
+  // endTime: t.Date,
 };
 
 const formOptions = {
@@ -52,6 +82,10 @@ const formOptions = {
     required: ' *',
   },
   fields: {
+    image: {
+      factory: LocalImageFactory,
+      error: 'Please, add an image',
+    },
     imageFlag: {
       // hidden: true,
       error: 'Please, add an image'
@@ -72,10 +106,10 @@ const formOptions = {
     price: {
       help: 'Pro tip: better to set affordable price',
       error: 'Please, give a positive number',
-      template: MaskedInputTemplate,
-      config: {
-        mask: 'money',
-      }
+      // template: MaskedInputTemplate,
+      // config: {
+      //   mask: 'money',
+      // }
     },
     phone: {
       editable: false,
@@ -110,26 +144,27 @@ export default class ProductFormView extends Component {
       formValue: {
         name: 'Misha',
       },
-      productOptions: newProductOptions,
+      productOptions: productOptions,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.categories != this.props.categories) {
-      const newProductOptions = t.update(this.state.productOptions, {
-        category: { '$set': t.enums(nextProps.categories) }
-      });
-      this.setState({
-        productOptions: newProductOptions,
-      });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if(nextProps.categories != this.props.categories) {
+  //     const newProductOptions = t.update(this.state.productOptions, {
+  //       category: { '$set': t.enums(nextProps.categories) }
+  //     });
+  //     this.setState({
+  //       productOptions: newProductOptions,
+  //     });
+  //   }
+  // }
 
   onFormPress() {
-    const product = this.form.getValue();
+    let product = this.form.getValue();
     // a = this.form.getComponent('imageFlag').refs;
-    const { localImage } = this.state;
-    this.props.onPress({ product, localImage });
+    const { localImage } = product.image;
+    // delete product.image;
+    this.props.onPress({ product, localImage: product.image });
   }
 
   onFormChange(value) {
@@ -154,10 +189,10 @@ export default class ProductFormView extends Component {
   render() {
     return (
       <ScrollView style={styles.formView}>
-        <FormImagePicker
+        {/*<FormImagePicker
           imageSource={this.state.imageSource}
           setLocalImage={localImage => this.setLocalImage(localImage)}
-        />
+        />*/}
         <Form
           ref={_form => (this.form = _form)}
           type={t.struct(this.state.productOptions)}
