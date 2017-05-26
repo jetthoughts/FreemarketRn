@@ -48,14 +48,13 @@ const LocalImage = t.struct({
 
 const productOptions = {
   image: LocalImage,
-  // imageFlag: ImageFlag,
   name: Name,
-  // description: t.maybe(t.String),
-  // category: t.enums({'-1': 'Loading...'}),
+  description: t.maybe(t.String),
+  category: t.enums({'-1': 'Loading...'}),
   price: Positive,
-  // allowPhone: t.Bool,
-  // phone: t.String,
-  // endTime: t.Date,
+  allowPhone: t.Bool,
+  phone: t.String,
+  endTime: t.Date,
 };
 
 const formOptions = {
@@ -150,7 +149,7 @@ export default class ProductFormView extends Component {
     const options = t.update(this.state.formOptions, {
       fields: {
         phone: {
-          editable: {'$set': value.allowPhone},
+          editable: {'$set': !!value.allowPhone},
         }
       }
     });
