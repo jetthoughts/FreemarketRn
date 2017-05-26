@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Image, Text, Button, StyleSheet } from 'react-native';
 
-import { selectPhotoTapped } from '../../services/ImagePickerService';
-
 const styles = StyleSheet.create({
   formImage: {
     alignItems: 'center',
@@ -45,12 +43,6 @@ const renderImage = (imageSource) => {
   );
 }
 
-// const selectPhoto = (onChange) => {
-//   selectPhotoTapped().then((localImage) => {
-//     onChange(localImage);
-//   });
-// }
-
 const renderImageBlock = (imageSource) => {
   if (imageSource) {
     return renderImage(imageSource);
@@ -59,10 +51,24 @@ const renderImageBlock = (imageSource) => {
   }
 };
 
+const renderError = ({hasError, error, errorBlockStyle}) => {
+  if (hasError && error) {
+    return (
+      <Text 
+        accessibilityLiveRegion="polite" 
+        style={errorBlockStyle}
+      >
+        {error}
+      </Text>
+    );
+  } else {
+    return null;
+  }
+}
+
 export default function localImageTemplate(locals) {
-  const stylesheet = locals.stylesheet;
+  const { stylesheet, hasError, error} = locals;
   const errorBlockStyle = stylesheet.errorBlock;
-  const error = locals.hasError && locals.error ? <Text accessibilityLiveRegion="polite" style={errorBlockStyle}>{locals.error}</Text> : null;
 
   const value = locals.value || {};
   const imageSource = value.uri;
@@ -78,7 +84,7 @@ export default function localImageTemplate(locals) {
           onPress={() => locals.onChange()}
         />
       </View>
-      {error}
+      { renderError({hasError, error, errorBlockStyle}) }
     </View>
   );
 };

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { ScrollView, View, Button, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
 
-import FormImagePicker from './FormImagePicker';
 import { dateToTimeString } from '../lib/helpers'
 import MaskedInputTemplate from '../lib/form_templates/MaskedInputTemplate';
 import LocalImageFactory from '../lib/form_factories/LocalImageFactory.js';
@@ -158,21 +157,9 @@ export default class ProductFormView extends Component {
     this.setState({formOptions: options, formValue: value});
   }
 
-  setLocalImage(localImage) {
-    this.setState({
-      imageSource: localImage.uri,
-      localImage,
-      formValue: { ...this.state.formValue, imageFlag: true },
-    });
-  }
-
   render() {
     return (
       <ScrollView style={styles.formView}>
-        {/*<FormImagePicker
-          imageSource={this.state.imageSource}
-          setLocalImage={localImage => this.setLocalImage(localImage)}
-        />*/}
         <Form
           ref={_form => (this.form = _form)}
           type={t.struct(this.state.productOptions)}
