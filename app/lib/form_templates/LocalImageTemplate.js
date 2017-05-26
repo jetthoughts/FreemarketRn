@@ -45,11 +45,11 @@ const renderImage = (imageSource) => {
   );
 }
 
-const selectPhoto = (onChange) => {
-  selectPhotoTapped().then((localImage) => {
-    onChange(localImage);
-  });
-}
+// const selectPhoto = (onChange) => {
+//   selectPhotoTapped().then((localImage) => {
+//     onChange(localImage);
+//   });
+// }
 
 const renderImageBlock = (imageSource) => {
   if (imageSource) {
@@ -75,7 +75,7 @@ export default function localImageTemplate(locals) {
       <View style={styles.button}>
         <Button
           title="Select Image"
-          onPress={() => selectPhoto(locals.onChange)}
+          onPress={() => locals.onChange()}
         />
       </View>
       {error}

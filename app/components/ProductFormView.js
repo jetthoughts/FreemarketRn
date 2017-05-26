@@ -20,8 +20,6 @@ const styles = StyleSheet.create({
 
 const Form = t.form.Form;
 
-const ImageFlag = t.refinement(t.Bool, value => value);
-
 const Name = t.String;
 
 Name.getValidationErrorMessage = (value, path, context) => {
