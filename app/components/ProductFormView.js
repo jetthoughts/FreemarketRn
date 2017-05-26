@@ -4,8 +4,8 @@ import { ScrollView, View, Button, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
 
 import { dateToTimeString } from '../lib/helpers'
-import MaskedInputTemplate from '../lib/form_templates/MaskedInputTemplate';
-import LocalImageFactory from '../lib/form_factories/LocalImageFactory.js';
+import MaskedInputTemplate from '../lib/tcomb-form/templates/MaskedInputTemplate';
+import LocalImageFactory from '../lib/tcomb-form/factories/LocalImageFactory';
 
 const styles = StyleSheet.create({
   formView: {

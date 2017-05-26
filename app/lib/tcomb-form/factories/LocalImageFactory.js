@@ -1,7 +1,7 @@
 import t from 'tcomb-form-native';
 import ImagePicker from 'react-native-image-picker';
 
-import localImageTemplate from '../form_templates/LocalImageTemplate';
+import localImageTemplate from '../templates/LocalImageTemplate';
 
 const Component = t.form.Component;
 
