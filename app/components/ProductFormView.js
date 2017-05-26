@@ -36,21 +36,6 @@ const Positive = t.refinement(t.Number, function (n) {
   return n >= 0 && n <= 100;
 });
 
-// const LocalImage = t.refinement(t.Struct({
-//   // data: t.String,
-//   // fileName: t.String,
-//   // fileSize: t.Integer,
-//   // height: t.Integer,
-//   // isVertical: t.Bool,
-//   // originalRotation: t.Integer,
-//   // path: t.String,
-//   // type: t.String,
-//   uri: t.String,
-//   // width: t.Integer,
-// }), (localImageStruct) => {
-//   return localImageStruct;
-// });
-
 const LocalImage = t.struct({
   data: t.String,
   fileName: t.String,
@@ -160,11 +145,8 @@ export default class ProductFormView extends Component {
   // }
 
   onFormPress() {
-    let product = this.form.getValue();
-    // a = this.form.getComponent('imageFlag').refs;
-    const { localImage } = product.image;
-    // delete product.image;
-    this.props.onPress({ product, localImage: product.image });
+    const product = this.form.getValue();
+    this.props.onPress({ product });
   }
 
   onFormChange(value) {

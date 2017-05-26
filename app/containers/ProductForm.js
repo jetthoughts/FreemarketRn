@@ -17,7 +17,9 @@ const mapDispatchToProps = dispatch => ({
   onPress: (payload) => {
     Keyboard.dismiss();
     if (payload.product) {
-      dispatch(requestCreateProduct(payload));
+      const { product } = payload;
+      const localImage = product.image;
+      dispatch(requestCreateProduct({ product, localImage}));
     }
   },
   onBackPress: Actions.ProductIndex,

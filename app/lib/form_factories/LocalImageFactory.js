@@ -9,7 +9,3 @@ export default class LocalImageFactory extends Component {
     return localImageTemplate;
   }
 }
-
-// LocalImageFactory.transformer = {
-
-// }

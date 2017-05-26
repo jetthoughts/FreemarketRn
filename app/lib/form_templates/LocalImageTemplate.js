@@ -52,7 +52,6 @@ const selectPhoto = (onChange) => {
 }
 
 const renderImageBlock = (imageSource) => {
-  // const imageSource = this.props.locals.value.uri;
   if (imageSource) {
     return renderImage(imageSource);
   } else {
@@ -71,7 +70,7 @@ export default function localImageTemplate(locals) {
   return (
     <View style={styles.formImage}>
       <View style={styles.imageSection}>
-        { renderImageBlock() }
+        { renderImageBlock(imageSource) }
       </View>
       <View style={styles.button}>
         <Button
