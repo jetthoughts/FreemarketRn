@@ -67,10 +67,6 @@ const formOptions = {
       factory: LocalImageFactory,
       error: 'Please, add an image',
     },
-    imageFlag: {
-      // hidden: true,
-      error: 'Please, add an image'
-    },
     name: {
       maxLength: 10,
     },
@@ -125,20 +121,20 @@ export default class ProductFormView extends Component {
       formValue: {
         name: 'Misha',
       },
-      productOptions: productOptions,
+      productOptions: newProductOptions,
     };
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if(nextProps.categories != this.props.categories) {
-  //     const newProductOptions = t.update(this.state.productOptions, {
-  //       category: { '$set': t.enums(nextProps.categories) }
-  //     });
-  //     this.setState({
-  //       productOptions: newProductOptions,
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.categories != this.props.categories) {
+      const newProductOptions = t.update(this.state.productOptions, {
+        category: { '$set': t.enums(nextProps.categories) }
+      });
+      this.setState({
+        productOptions: newProductOptions,
+      });
+    }
+  }
 
   onFormPress() {
     const product = this.form.getValue();
@@ -146,14 +142,24 @@ export default class ProductFormView extends Component {
   }
 
   onFormChange(value) {
+    const allowPhone = !!value.allowPhone;
     const options = t.update(this.state.formOptions, {
       fields: {
         phone: {
-          editable: {'$set': !!value.allowPhone},
+          editable: {'$set': allowPhone},
         }
       }
     });
-    this.setState({formOptions: options, formValue: value});
+    const newProductOptions = t.update(this.state.productOptions, {
+      phone: {
+        '$set': (allowPhone ? t.String : t.maybe(t.String)),
+      },
+    })
+    this.setState({
+      formOptions: options, 
+      formValue: value, 
+      productOptions: newProductOptions
+    });
   }
 
   render() {
