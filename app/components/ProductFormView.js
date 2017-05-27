@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, View, Button, StyleSheet } from 'react-native';
+import { ScrollView, View, Button, StyleSheet, Keyboard } from 'react-native';
 import t from 'tcomb-form-native';
 
 import { dateToTimeString } from '../lib/helpers'
@@ -130,7 +130,11 @@ export default class ProductFormView extends Component {
 
   onFormPress() {
     const product = this.form.getValue();
-    this.props.onPress({ product });
+    Keyboard.dismiss();
+    if (product) {
+      const localImage = product.image;
+      this.props.onPress({ product, localImage });
+    }
   }
 
   onFormChange(value) {

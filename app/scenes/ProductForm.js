@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Keyboard } from 'react-native';
 
 import ProductFormView from '../components/ProductFormView';
 import { requestCreateProduct } from '../reducers/products';
@@ -14,14 +13,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadCategories: () => dispatch(requestCategories()),
-  onPress: (payload) => {
-    Keyboard.dismiss();
-    if (payload.product) {
-      const { product } = payload;
-      const localImage = product.image;
-      dispatch(requestCreateProduct({ product, localImage}));
-    }
-  },
+  onPress: payload => dispatch(requestCreateProduct(payload)),
   onBackPress: Actions.ProductIndex,
 });
 
