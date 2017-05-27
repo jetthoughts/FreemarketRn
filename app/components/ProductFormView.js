@@ -6,6 +6,7 @@ import t from 'tcomb-form-native';
 import { dateToTimeString } from '../lib/helpers'
 import MaskedInputTemplate from '../lib/tcomb-form/templates/MaskedInputTemplate';
 import LocalImageFactory from '../lib/tcomb-form/factories/LocalImageFactory';
+import LocalImage from '../lib/tcomb-form/types/localImage';
 
 const styles = StyleSheet.create({
   formView: {
@@ -33,18 +34,13 @@ const Positive = t.refinement(t.Number, function (n) {
   return n >= 0 && n <= 100;
 });
 
-const LocalImage = t.struct({
-  data: t.String,
-  fileName: t.String,
-  fileSize: t.Integer,
-  height: t.Integer,
-  isVertical: t.Bool,
-  originalRotation: t.Integer,
-  path: t.String,
-  type: t.String,
-  uri: t.String,
-  width: t.Integer,
-});
+Positive.getValidationErrorMessage = (value, path, context) => {
+  if (value > 100) {
+    return "Too expensive, nobody gonna buy it";
+  } else {
+    return 'Please, give a positive number';
+  }
+}
 
 const productOptions = {
   image: LocalImage,
@@ -69,6 +65,7 @@ const formOptions = {
     },
     name: {
       maxLength: 10,
+      error: 'Please, add some name',
     },
     description: {
       multiline: true,
@@ -82,11 +79,6 @@ const formOptions = {
     },
     price: {
       help: 'Pro tip: better to set affordable price',
-      error: 'Please, give a positive number',
-      // template: MaskedInputTemplate,
-      // config: {
-      //   mask: 'money',
-      // }
     },
     phone: {
       editable: false,

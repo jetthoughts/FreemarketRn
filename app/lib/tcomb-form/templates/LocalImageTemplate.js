@@ -28,11 +28,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const renderPlaceholder = () => (
-  <View style={styles.imagePlaceholder}>
-    <Text>Place for an Image</Text>
-  </View>
-);
+const renderPlaceholder = (hasError) => {
+  let stylesPlacheholder = styles.imagePlaceholder;
+  if (hasError) {
+    stylesPlacheholder = StyleSheet.flatten([stylesPlacheholder, {borderColor: '#a94442'}]);
+  }
+  return (
+    <View style={stylesPlacheholder}>
+      <Text>Place for an Image</Text>
+    </View>
+  );
+};
 
 const renderImage = (imageSource) => {
   return (
@@ -43,11 +49,11 @@ const renderImage = (imageSource) => {
   );
 }
 
-const renderImageBlock = (imageSource) => {
+const renderImageBlock = ({imageSource, hasError}) => {
   if (imageSource) {
     return renderImage(imageSource);
   } else {
-    return renderPlaceholder();
+    return renderPlaceholder(hasError);
   }
 };
 
@@ -76,7 +82,7 @@ export default function localImageTemplate(locals) {
   return (
     <View style={styles.formImage}>
       <View style={styles.imageSection}>
-        { renderImageBlock(imageSource) }
+        { renderImageBlock({imageSource, hasError}) }
       </View>
       <View style={styles.button}>
         <Button
