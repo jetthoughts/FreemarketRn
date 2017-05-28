@@ -7,9 +7,10 @@ import Config from 'react-native-config';
 // Init Firebase
 const config = {
   apiKey: Config.FIREBASE_API_KEY,
-  authDomain: 'freemarket-907ef.firebaseapp.com',
-  storageBucket: 'freemarket-907ef.appspot.com',
+  authDomain: `${Config.FIREBASE_HOST_NAME}.firebaseapp.com`,
+  storageBucket: `${Config.FIREBASE_HOST_NAME}.appspot.com`,
 };
+
 firebase.initializeApp(config);
 const storage = firebase.storage();
 
