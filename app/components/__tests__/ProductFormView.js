@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import MockDate from 'mockdate';
 
 import ProductFormView from '../ProductFormView';
-import categories from '../../constants/categories'
+import categories from '../../constants/categories';
 import { categoriesToObject } from '../../lib/helpers';
 
 it('renders successfully', () => {

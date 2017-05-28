@@ -19,7 +19,10 @@ module.exports = {
   "rules": {
     "react/jsx-filename-extension": 0,
     "no-else-return": 0,
-    "import/prefer-default-export": 0
+    "import/prefer-default-export": 0,
+    "prefer-template": 0,
+    "no-return-assign": 0,
+    "class-methods-use-this": 0
   },
   "settings": {
     "import/resolver": "react-native"

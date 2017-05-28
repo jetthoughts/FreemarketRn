@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+/* eslint react/prop-types: 0 */
+
+import React from 'react';
 import { View, Image, Text, Button, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
 const renderPlaceholder = (hasError) => {
   let stylesPlacheholder = styles.imagePlaceholder;
   if (hasError) {
-    stylesPlacheholder = StyleSheet.flatten([stylesPlacheholder, {borderColor: '#a94442'}]);
+    stylesPlacheholder = StyleSheet.flatten([stylesPlacheholder, { borderColor: '#a94442' }]);
   }
   return (
     <View style={stylesPlacheholder}>
@@ -40,16 +41,14 @@ const renderPlaceholder = (hasError) => {
   );
 };
 
-const renderImage = (imageSource) => {
-  return (
-    <Image
-      source={{ uri: imageSource }}
-      style={styles.image}
-    />
-  );
-}
+const renderImage = imageSource => (
+  <Image
+    source={{ uri: imageSource }}
+    style={styles.image}
+  />
+);
 
-const renderImageBlock = ({imageSource, hasError}) => {
+const renderImageBlock = ({ imageSource, hasError }) => {
   if (imageSource) {
     return renderImage(imageSource);
   } else {
@@ -57,11 +56,11 @@ const renderImageBlock = ({imageSource, hasError}) => {
   }
 };
 
-const renderError = ({hasError, error, errorBlockStyle}) => {
+const renderError = ({ hasError, error, errorBlockStyle }) => {
   if (hasError && error) {
     return (
-      <Text 
-        accessibilityLiveRegion="polite" 
+      <Text
+        accessibilityLiveRegion="polite"
         style={errorBlockStyle}
       >
         {error}
@@ -70,10 +69,10 @@ const renderError = ({hasError, error, errorBlockStyle}) => {
   } else {
     return null;
   }
-}
+};
 
 export default function localImageTemplate(locals) {
-  const { stylesheet, hasError, error} = locals;
+  const { stylesheet, hasError, error } = locals;
   const errorBlockStyle = stylesheet.errorBlock;
 
   const value = locals.value || {};
@@ -82,7 +81,7 @@ export default function localImageTemplate(locals) {
   return (
     <View style={styles.formImage}>
       <View style={styles.imageSection}>
-        { renderImageBlock({imageSource, hasError}) }
+        { renderImageBlock({ imageSource, hasError }) }
       </View>
       <View style={styles.button}>
         <Button
@@ -90,7 +89,7 @@ export default function localImageTemplate(locals) {
           onPress={() => locals.onChange()}
         />
       </View>
-      { renderError({hasError, error, errorBlockStyle}) }
+      { renderError({ hasError, error, errorBlockStyle }) }
     </View>
   );
-};
+}

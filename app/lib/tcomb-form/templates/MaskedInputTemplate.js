@@ -1,10 +1,11 @@
+/* eslint-disable */
 // From https://gist.github.com/sibelius/c564ded5bfd39534cf035e0460f2ee9a
 import React from 'react';
 import {
   View,
   Text,
 } from 'react-native';
-import { TextInputMask } from 'react-native-masked-text'
+import { TextInputMask } from 'react-native-masked-text';
 
 export default function maskedInputTemplate(locals) {
   if (locals.hidden) {

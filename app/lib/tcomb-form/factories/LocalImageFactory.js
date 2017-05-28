@@ -6,10 +6,6 @@ import localImageTemplate from '../templates/LocalImageTemplate';
 const Component = t.form.Component;
 
 export default class LocalImageFactory extends Component {
-  getTemplate() {
-    return localImageTemplate;
-  }
-
   onChange() {
     const options = {
       quality: 1.0,
@@ -20,14 +16,18 @@ export default class LocalImageFactory extends Component {
 
     ImagePicker.showImagePicker(options, (response) => {
       if (response.didCancel) {
-        //User cancelled photo picker
+        // User cancelled photo picker
       } else if (response.error) {
-        //ImagePicker Error
+        // ImagePicker Error
       } else if (response.customButton) {
-        //User tapped custom button
+        // User tapped custom button
       } else {
         super.onChange(response);
       }
     });
+  }
+
+  getTemplate() {
+    return localImageTemplate;
   }
 }
