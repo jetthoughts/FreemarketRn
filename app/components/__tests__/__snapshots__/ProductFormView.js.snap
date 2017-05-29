@@ -664,7 +664,7 @@ exports[`renders successfully 1`] = `
                 }
               }
             >
-              00:00
+              10:20
             </Text>
           </View>
           <View
