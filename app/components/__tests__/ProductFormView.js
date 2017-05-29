@@ -8,7 +8,7 @@ import categories from '../../constants/categories';
 import { categoriesToObject } from '../../lib/helpers';
 
 it('renders successfully', () => {
-  MockDate.set('Wed Feb 02 2000 00:00:00', 120);
+  MockDate.set(949442400000);
 
   const tree = renderer.create(
     <ProductFormView
