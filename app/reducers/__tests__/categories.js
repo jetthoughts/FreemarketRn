@@ -42,7 +42,7 @@ describe('list', () => {
     expect(list.records).toEqual(categories);
   });
 
-  it('completes on request', () => {
+  it('completes on success', () => {
     const { list } = reducer(undefined, categoriesSuccess());
 
     expect(list.completed).toBeTruthy();

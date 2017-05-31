@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
 
-const SignIn = () => (
-  <View>
-    <Text>Sign in form should be here</Text>
-  </View>
-);
+import { requestSignIn } from '../reducers/user';
+import SignInForm from '../components/SignInForm';
 
-export default SignIn;
+const mapDispatchToProps = dispatch => ({
+  onSubmit: payload => dispatch(requestSignIn(payload)),
+});
+
+export default connect(undefined, mapDispatchToProps)(SignInForm);
