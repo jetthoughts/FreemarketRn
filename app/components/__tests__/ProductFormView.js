@@ -5,7 +5,7 @@ import MockDate from 'mockdate';
 
 import ProductFormView from '../ProductFormView';
 import categories from '../../constants/categories';
-import { categoriesToObject } from '../../lib/helpers';
+import { categoriesToObject } from '../../utils/records';
 
 it('renders successfully', () => {
   MockDate.set(949442400000);

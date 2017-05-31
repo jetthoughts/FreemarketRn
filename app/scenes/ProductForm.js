@@ -3,7 +3,7 @@ import { Actions } from 'react-native-router-flux';
 
 import ProductFormView from '../components/ProductFormView';
 import { requestCreateProduct } from '../reducers/products';
-import { categoriesToObject } from '../lib/helpers';
+import { categoriesToObject } from '../utils/records';
 import { requestCategories } from '../reducers/categories';
 
 const mapStateToProps = state => ({

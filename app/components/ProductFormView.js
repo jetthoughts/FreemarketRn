@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ScrollView, View, Button, StyleSheet, Keyboard } from 'react-native';
 import t from 'tcomb-form-native';
 
-import { dateToTimeString } from '../lib/helpers';
+import { dateToTimeString } from '../utils/time';
 import MaskedInputTemplate from '../lib/tcomb-form/templates/MaskedInputTemplate';
 import LocalImageFactory from '../lib/tcomb-form/factories/LocalImageFactory';
 import LocalImage from '../lib/tcomb-form/types/localImage';
