@@ -24,8 +24,8 @@ sagaMiddleware.run(rootSaga);
 const App = () => (
   <Provider store={store}>
     <Router>
-      <Scene key="Main" component={Main} hideNavBar initial />
-      <Scene key="ProductForm" component={ProductForm} hideNavBar />
+      <Scene key="Main" component={Main} hideNavBar />
+      <Scene key="ProductForm" component={ProductForm} hideNavBar initial />
       <Scene key="SignIn" component={SignIn} hideNavBar />
     </Router>
   </Provider>

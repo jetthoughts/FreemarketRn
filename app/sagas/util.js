@@ -3,3 +3,4 @@ export const objectWithRecordsToArray = records => (
 );
 
 export const isUnauthorizedError = error => error.response.status === 401;
+

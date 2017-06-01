@@ -16,4 +16,7 @@ jest.mock('../app/api/firebase', () => {
   }
 });
 
+const time = require('../app/utils/time');
+time.dateToTimeString = () => '10:20';
+
 module.exports = rn;
